@@ -31,12 +31,22 @@ const tabStyle = (isActive: boolean): CSSProperties => ({
   whiteSpace: 'nowrap',
 });
 
+const HOVER_CSS = `
+  .lumena-hr-tab:not(.active):hover { color: var(--fg-secondary); }
+`;
+
 export function HealthRecord(): JSX.Element {
   return (
     <div style={{ padding: '32px 40px', maxWidth: 960, margin: 0 }}>
+      <style>{HOVER_CSS}</style>
       <nav style={tabRowStyle} aria-label="Health record sections">
         {TABS.map((tab) => (
-          <NavLink key={tab.href} to={tab.href} style={({ isActive }) => tabStyle(isActive)}>
+          <NavLink
+            key={tab.href}
+            to={tab.href}
+            className={({ isActive }) => `lumena-hr-tab${isActive ? ' active' : ''}`}
+            style={({ isActive }) => tabStyle(isActive)}
+          >
             {tab.label}
           </NavLink>
         ))}
