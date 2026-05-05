@@ -5,6 +5,7 @@ import type { Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router';
+import { EmptyState } from '../../components/EmptyState';
 import { InfoButton } from '../../components/InfoButton';
 import { InfoSection } from '../../components/InfoSection';
 import { ICONS } from '../../lumena/icons';
@@ -16,40 +17,36 @@ export function LabResults(): JSX.Element {
   const patient = medplum.getProfile() as Patient;
   const reports = medplum.searchResources('DiagnosticReport', 'subject=' + getReferenceString(patient)).read();
 
+  if (reports.length === 0) {
+    return (
+      <EmptyState
+        icon="clipboard"
+        title="No lab results yet"
+        body="Results shared by your providers will appear here."
+      />
+    );
+  }
+
   return (
-    <div>
-      <h1
-        style={{
-          fontFamily: 'var(--font-serif)',
-          fontSize: 28,
-          fontWeight: 500,
-          letterSpacing: '-0.02em',
-          color: 'var(--fg-primary)',
-          margin: '0 0 16px',
-        }}
-      >
-        Lab results
-      </h1>
-      <InfoSection title="Lab results">
-        {reports.map((report) => (
-          <InfoButton key={report.id} onClick={() => navigate(`./${report.id}`)?.catch(console.error)}>
-            <div>
-              <div
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: 13,
-                  color: 'var(--fg-muted)',
-                  marginBottom: 4,
-                }}
-              >
-                {formatDate(report.meta?.lastUpdated as string)}
-              </div>
-              <div style={{ color: 'var(--fg-primary)', fontWeight: 500 }}>{report.code?.text}</div>
+    <InfoSection>
+      {reports.map((report) => (
+        <InfoButton key={report.id} onClick={() => navigate(`./${report.id}`)?.catch(console.error)}>
+          <div>
+            <div
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 13,
+                color: 'var(--fg-muted)',
+                marginBottom: 4,
+              }}
+            >
+              {formatDate(report.meta?.lastUpdated as string)}
             </div>
-            <Icon d={ICONS.chevronRight} size={16} style={{ color: 'var(--fg-muted)' }} />
-          </InfoButton>
-        ))}
-      </InfoSection>
-    </div>
+            <div style={{ color: 'var(--fg-primary)', fontWeight: 500 }}>{report.code?.text}</div>
+          </div>
+          <Icon d={ICONS.chevronRight} size={16} style={{ color: 'var(--fg-muted)' }} />
+        </InfoButton>
+      ))}
+    </InfoSection>
   );
 }
