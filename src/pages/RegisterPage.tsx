@@ -34,7 +34,7 @@ export function RegisterPage(): JSX.Element {
           color: 'var(--fg-primary)',
           marginBottom: 64,
         }}
-        aria-label="Foo Medical home"
+        aria-label="Lumena home"
       >
         <LogoMark size={28} />
         <span
@@ -46,7 +46,7 @@ export function RegisterPage(): JSX.Element {
             lineHeight: 1,
           }}
         >
-          Foo Medical
+          Lumena
         </span>
       </button>
 
@@ -78,7 +78,7 @@ export function RegisterPage(): JSX.Element {
               textAlign: 'center',
             }}
           >
-            Register with Foo Medical
+            Register with Lumena
           </h2>
         </RegisterForm>
       </div>

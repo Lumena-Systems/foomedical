@@ -15,7 +15,7 @@ const navLinkStyle: CSSProperties = {
   transition: 'color 120ms cubic-bezier(0.2,0,0,1)',
 };
 
-function FooLockup(): JSX.Element {
+function BrandLockup(): JSX.Element {
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, color: 'var(--fg-primary)' }}>
       <LogoMark size={24} />
@@ -28,7 +28,7 @@ function FooLockup(): JSX.Element {
           lineHeight: 1,
         }}
       >
-        Foo Medical
+        Lumena
       </span>
     </span>
   );
@@ -69,14 +69,14 @@ export function Header(): JSX.Element {
             display: 'inline-flex',
             alignItems: 'center',
           }}
-          aria-label="Foo Medical home"
+          aria-label="Lumena home"
         >
-          <FooLockup />
+          <BrandLockup />
         </button>
 
         <nav style={{ display: 'flex', alignItems: 'center', gap: 28 }} aria-label="Primary">
           <a
-            href="https://github.com/medplum/foomedical"
+            href="https://github.com/Lumena-Systems/foomedical"
             target="_blank"
             rel="noreferrer"
             style={navLinkStyle}

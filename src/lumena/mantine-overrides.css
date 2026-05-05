@@ -1,7 +1,7 @@
 /* ============================================================
    Mantine internals — Lumena overrides
    For components we don't directly own (rendered by @medplum/react
-   or used inline by foomedical pages), reach into Mantine's stable
+   or used inline by Lumena pages), reach into Mantine's stable
    class names and pull them onto Lumena tokens.
    ============================================================ */
 

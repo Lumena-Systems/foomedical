@@ -48,7 +48,7 @@ function deriveTitle(pathname: string): { title: string; subtitle?: string } {
       return { title: entry.title, subtitle: entry.subtitle };
     }
   }
-  return { title: 'Foo Medical' };
+  return { title: 'Lumena' };
 }
 
 function isNavActive(pathname: string, href: string): boolean {
@@ -108,7 +108,7 @@ export function AppShell({ children }: { children: ReactNode }): JSX.Element {
               lineHeight: 1,
             }}
           >
-            Foo Medical
+            Lumena
           </span>
         </NavLink>
         <div style={{ padding: 12 }}>
@@ -199,7 +199,7 @@ export function AppShell({ children }: { children: ReactNode }): JSX.Element {
             >
               {profileName}
             </div>
-            <div style={{ fontSize: 11, color: 'var(--fg-muted)' }}>Foo Medical · Patient</div>
+            <div style={{ fontSize: 11, color: 'var(--fg-muted)' }}>Lumena · Patient</div>
           </div>
           <Icon d={ICONS.settings} size={16} style={{ color: 'var(--fg-muted)' }} />
         </button>

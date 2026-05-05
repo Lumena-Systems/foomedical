@@ -34,7 +34,7 @@ export function SignInPage(): JSX.Element {
           color: 'var(--fg-primary)',
           marginBottom: 64,
         }}
-        aria-label="Foo Medical home"
+        aria-label="Lumena home"
       >
         <LogoMark size={28} />
         <span
@@ -46,7 +46,7 @@ export function SignInPage(): JSX.Element {
             lineHeight: 1,
           }}
         >
-          Foo Medical
+          Lumena
         </span>
       </button>
 
@@ -76,7 +76,7 @@ export function SignInPage(): JSX.Element {
               textAlign: 'center',
             }}
           >
-            Sign in to Foo Medical
+            Sign in to Lumena
           </h2>
         </SignInForm>
       </div>

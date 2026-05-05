@@ -44,7 +44,7 @@ export function LandingPage(): JSX.Element {
           }}
         >
           <div style={{ maxWidth: 820 }}>
-            <Eyebrow style={{ marginBottom: 32, color: 'var(--fg-muted)' }}>Foo Medical &middot; Primary care</Eyebrow>
+            <Eyebrow style={{ marginBottom: 32, color: 'var(--fg-muted)' }}>Lumena &middot; Primary care</Eyebrow>
             <h1
               className="lm-display"
               style={{
@@ -142,7 +142,7 @@ export function LandingPage(): JSX.Element {
                 maxWidth: 640,
               }}
             >
-              Foo Medical is open source. The code, the data shapes, and the integration patterns are all on GitHub. Use
+              Lumena is open source. The code, the data shapes, and the integration patterns are all on GitHub. Use
               it to learn how a FHIR-backed portal is wired together, or as a starting point for your own clinic.
             </p>
           </div>

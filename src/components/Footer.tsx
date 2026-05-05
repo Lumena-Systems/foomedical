@@ -26,7 +26,7 @@ const columns: { eyebrow: string; links: FooterLink[] }[] = [
   {
     eyebrow: 'Project',
     links: [
-      { label: 'Open source', href: 'https://github.com/medplum/foomedical' },
+      { label: 'Open source', href: 'https://github.com/Lumena-Systems/foomedical' },
       { label: 'More tutorials', href: 'https://www.medplum.com/docs/tutorials' },
     ],
   },
@@ -39,7 +39,7 @@ const columns: { eyebrow: string; links: FooterLink[] }[] = [
   },
   {
     eyebrow: 'Notice',
-    links: [{ label: 'This is sample software, not a clinic.', href: 'https://github.com/medplum/foomedical' }],
+    links: [{ label: 'This is sample software, not a clinic.', href: 'https://github.com/Lumena-Systems/foomedical' }],
   },
 ];
 
@@ -74,7 +74,7 @@ export function Footer(): JSX.Element {
                 lineHeight: 1,
               }}
             >
-              Foo Medical
+              Lumena
             </span>
           </span>
           <p
@@ -149,7 +149,7 @@ export function Footer(): JSX.Element {
               color: 'var(--fg-muted)',
             }}
           >
-            &copy; {new Date().getFullYear()} Foo Medical, Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} Lumena Systems, Inc. All rights reserved.
           </span>
           <span
             style={{

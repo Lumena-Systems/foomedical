@@ -1,142 +1,36 @@
-<h1 align="center">Foo Medical</h1>
-<p align="center">A free and open-source healthcare webapp from the Medplum team.</p>
-<p align="center">
-  <a href="https://github.com/medplum/foomedical/actions">
-    <img src="https://github.com/medplum/foomedical/actions/workflows/build.yml/badge.svg" />
-  </a>
-  <a href="https://github.com/medplum/foomedical/blob/main/LICENSE.txt">
-    <img src="https://img.shields.io/badge/license-Apache-blue.svg" />
-  </a>
-  <a href="https://sonarcloud.io/project/overview?id=medplum_foomedical">
-    <img src="https://sonarcloud.io/api/project_badges/measure?project=medplum_foomedical&metric=alert_status&token=3760929adde88ce7da87782be8d811f8b5cec0f4" />
-  </a>
-</p>
+<h1 align="center">Lumena</h1>
+<p align="center">A patient portal built on the Lumena design system.</p>
 
-![Foo Medical Screenshot](screenshot.png)
+---
 
-### What is Foo Medical?
+## What this is
 
-[Foo Medical](https://foomedical.com/) is a **ready to use medical practice sample app** that's open source. It's meant for developers to clone, customize and run.
+Lumena's patient-facing portal — health records, care plan, messaging, scheduling. Forked from [medplum/foomedical](https://github.com/medplum/foomedical) (the Medplum team's open-source patient-app sample, Apache-2.0) and reskinned to the [Lumena design system](https://github.com/Lumena-Systems): warm-paper neutrals, deep ink text, twilight slate-teal brand, Newsreader / Inter Tight / IBM Plex Mono.
 
-### Features
+The backend is [Medplum](https://www.medplum.com) — FHIR R4, hosted or self-hosted. By default the app points at Medplum's hosted demo project; swap the IDs in `src/config.ts` to point at your own.
 
-- Completely free and open-source
-- Secure and compliant [Medplum](https://www.medplum.com) backend, which is also open source
-- Patient registration and authentication
-- Health records
-  - Lab results
-  - Medications
-  - Vaccines
-  - Vitals
-- Patient-provider messaging
-- Care plans
-- Patient scheduling
-- All data represented in [FHIR](https://hl7.org/FHIR/)
+## Run locally
 
-Foo Medical is designed to be forked and customized for your business' needs. Register on [foomedical.com](https://foomedical.com/) to see it in action.
-
-### Getting Started
-
-First, [fork](https://github.com/medplum/foomedical/fork) and clone the repo.
-
-Next, install the app from your terminal
-
-```bash
+```sh
 npm install
+npm run dev          # vite dev server
+npm run build        # tsc + vite build
+npm run lint         # eslint v9 flat config
+npm test             # jest
 ```
 
-Then, run the app!
+Sign in / register flow uses Medplum's hosted auth by default. To wire up a different project, register at [Medplum](https://www.medplum.com/docs/tutorials/register) and replace the values in `src/config.ts`.
 
-```bash
-npm run dev
-```
+## Layout
 
-This app should run on `http://localhost:3000/`
+- `src/lumena/` — the design system: tokens (`tokens.css`), primitives (`Btn`, `Pill`, `Card`, `Eyebrow`, `Avatar`, `Icon`), the app shell (sidebar + topbar wired to react-router), and Mantine overrides (`mantine-overrides.css`) that pull `@medplum/react` internals onto Lumena tokens.
+- `src/pages/` — patient-facing routes: home, health record, care plan, messages, get care, account, plus the landing + auth surfaces.
+- `src/components/` — shared in-app chrome (`InfoSection`, `InfoButton`, `SideMenu`, `Loading`, `Footer`, `LineChart`).
 
-Log into the app on localhost using the same credentials you created on [foomedical.com](https://foomedical.com/) and you are ready to start customizing.
+## Acknowledgements
 
-### Deploying your app
+Built on [Medplum](https://www.medplum.com) and [FHIR](https://www.hl7.org/fhir/). Forked from [Foo Medical](https://github.com/medplum/foomedical) — the original sample is © Orangebot, Inc. and Medplum contributors, Apache-2.0.
 
-To get started deploying your app we recommend making an account on [Vercel](https://vercel.com/), free accounts are available.
+## License
 
-You can deploy this application by [clicking here](https://vercel.com/new/clone?s=https%3A%2F%2Fgithub.com%2Fmedplum%2Ffoomedical&showOptionalTeamCreation=false).
-
-### Account Setup
-
-By default, your locally running Foo Medical app is pointing to the hosted Medplum service. Foo Medical registers signups to a test project.
-
-To send patients to your own organization you will need to [register a new Project on Medplum](https://www.medplum.com/docs/tutorials/register) and configure your environment variables to point to your own project (see [config.ts](https://github.com/medplum/foomedical/blob/main/src/config.ts) for an example).
-
-If you are using the Medplum Hosted service, you can login to your Medplum Instance and add the following identifiers to your [Project Site Settings](https://app.medplum.com/admin/sites)
-
-- Google Client Id
-- Google Client Secret
-- Recaptcha Site Key
-- Recaptcha Secret Key
-
-Contact the medplum team ([support@medplum.com](mailto:support@medplum.com) or [Discord](https://discord.gg/medplum])) with any questions.
-
-### Data Setup
-
-When you log into Foo Medical a set of sample FHIR records is created on your behalf. The ability to run automations is part of the Medplum platform using a framework called [Bots](https://www.medplum.com/docs/bots). For reference, Bot that created the records in Foo Medical can be found [here](https://github.com/medplum/medplum-demo-bots/blob/main/src/sample-account-setup.ts).
-
-### Scheduling
-
-The "Get Care" page is configured to search for availability with service-type "office-visit". Configure your practitioner's schedule with a Medplum scheduling extension such as this one:
-```
-{
-  "resourceType": "Schedule",
-  "active": true,
-  "extension": [
-    {
-      "url": "https://medplum.com/fhir/StructureDefinition/SchedulingParameters",
-      "extension": [
-        {
-          "url": "serviceType",
-          "valueCodeableConcept": {
-            "coding": [{"code": "office-visit"}]
-          }
-        },
-        {
-          "url": "duration",
-          "valueDuration": {
-            "value": 1,
-            "unit": "h"
-          }
-        },
-        {
-          "url": "availability",
-          "extension": [
-            {
-              "url": "availableTime",
-              "extension": [
-                { "url": "daysOfWeek", "valueCode": "mon" },
-                { "url": "daysOfWeek", "valueCode": "tue" },
-                { "url": "daysOfWeek", "valueCode": "wed" },
-                { "url": "daysOfWeek", "valueCode": "thu" },
-                { "url": "availableStartTime", "valueTime": "09:00:00" },
-                { "url": "availableEndTime", "valueTime": "17:00:00" },
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
-
-```
-
-### Compliance
-
-Medplum backend is HIPAA compliant and SOC 2 certified. Getting an account set up requires registering on [medplum.com](https://www.medplum.com/). Feel free to ask us questions in real time on our [Discord Server](https://discord.gg/medplum).
-
-### About Medplum
-
-[Medplum](https://www.medplum.com/) is an open-source, API-first EHR. Medplum makes it easy to build healthcare apps quickly with less code.
-
-Medplum supports self-hosting and provides a [hosted service](https://app.medplum.com/). [Foo Medical](https://foomedical.com/) uses the hosted service as a backend.
-
-- Read our [documentation](https://www.medplum.com/docs/)
-- Browse our [React component library](https://storybook.medplum.com/)
-- Join our [Discord](https://discord.gg/medplum)
+Apache-2.0. See `LICENSE.txt`.

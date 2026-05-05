@@ -15,7 +15,7 @@ import './lumena/tokens.css';
 import './lumena/mantine-overrides.css';
 
 const medplum = new MedplumClient({
-  // To run FooMedical locally, you can set the baseURL in this constructor
+  // To run Lumena locally, you can set the baseURL in this constructor
   // baseUrl: http://localhost:8103
   onUnauthenticated: () => (window.location.href = '/'),
 });
