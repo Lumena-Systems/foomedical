@@ -6,6 +6,7 @@ import { StatusBadge, useMedplum } from '@medplum/react';
 import { IconMapPin } from '@tabler/icons-react';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router';
+import { EmptyState } from '../../components/EmptyState';
 import { InfoButton } from '../../components/InfoButton';
 import { InfoSection } from '../../components/InfoSection';
 import { ICONS } from '../../lumena/icons';
@@ -19,21 +20,19 @@ export function Vaccines(): JSX.Element {
   const activeVaccines = vaccines.filter((v) => v.occurrenceDateTime && v.occurrenceDateTime > today);
   const pastVaccines = vaccines.filter((v) => !v.occurrenceDateTime || v.occurrenceDateTime <= today);
 
+  if (vaccines.length === 0) {
+    return (
+      <EmptyState
+        icon="shield"
+        title="No vaccines recorded"
+        body="Your immunization history will appear here."
+      />
+    );
+  }
+
   return (
     <div>
-      <h1
-        style={{
-          fontFamily: 'var(--font-serif)',
-          fontSize: 28,
-          fontWeight: 500,
-          letterSpacing: '-0.02em',
-          color: 'var(--fg-primary)',
-          margin: '0 0 16px',
-        }}
-      >
-        Vaccines
-      </h1>
-      <InfoSection title="Active upcoming vaccines">
+      <InfoSection>
         {activeVaccines.length === 0 ? (
           <div style={{ padding: '32px 20px', textAlign: 'center', color: 'var(--fg-muted)' }}>
             <div style={{ fontSize: 14, color: 'var(--fg-secondary)', marginBottom: 4 }}>
@@ -55,7 +54,7 @@ export function Vaccines(): JSX.Element {
         )}
       </InfoSection>
       {pastVaccines.length > 0 && (
-        <InfoSection title="Past vaccines">
+        <InfoSection>
           <VaccineList vaccines={pastVaccines} />
         </InfoSection>
       )}
