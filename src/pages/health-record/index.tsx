@@ -1,48 +1,49 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
+import type { CSSProperties, JSX } from 'react';
 import { Suspense } from 'react';
-import type { JSX } from 'react';
-import { Outlet } from 'react-router';
+import { NavLink, Outlet } from 'react-router';
 import { Loading } from '../../components/Loading';
-import { SideMenu } from '../../components/SideMenu';
-import { measurementsMeta } from './Measurement.data';
 
-const sideMenu = {
-  title: 'Health record',
-  menu: [
-    { name: 'Lab results', href: '/health-record/lab-results' },
-    { name: 'Medications', href: '/health-record/medications' },
-    { name: 'Questionnaire responses', href: '/health-record/questionnaire-responses' },
-    { name: 'Vaccines', href: '/health-record/vaccines' },
-    {
-      name: 'Vitals',
-      href: '/health-record/vitals',
-      subMenu: Object.values(measurementsMeta).map(({ title, id }) => ({
-        name: title,
-        href: `/health-record/vitals/${id}`,
-      })),
-    },
-  ],
+const TABS: readonly { label: string; href: string }[] = [
+  { label: 'Lab results', href: '/health-record/lab-results' },
+  { label: 'Medications', href: '/health-record/medications' },
+  { label: 'Questionnaire responses', href: '/health-record/questionnaire-responses' },
+  { label: 'Vaccines', href: '/health-record/vaccines' },
+  { label: 'Vitals', href: '/health-record/vitals' },
+];
+
+const tabRowStyle: CSSProperties = {
+  display: 'flex',
+  gap: 24,
+  borderBottom: '1px solid var(--border-quiet)',
+  marginBottom: 24,
 };
+
+const tabStyle = (isActive: boolean): CSSProperties => ({
+  fontSize: 13,
+  fontWeight: isActive ? 500 : 400,
+  color: isActive ? 'var(--ink-900)' : 'var(--fg-muted)',
+  padding: '12px 0',
+  marginBottom: -1,
+  borderBottom: isActive ? '2px solid var(--ink-900)' : '2px solid transparent',
+  textDecoration: 'none',
+  whiteSpace: 'nowrap',
+});
 
 export function HealthRecord(): JSX.Element {
   return (
-    <div
-      style={{
-        display: 'flex',
-        gap: 24,
-        maxWidth: 1200,
-        margin: '0 auto',
-        padding: 24,
-        alignItems: 'flex-start',
-      }}
-    >
-      <SideMenu {...sideMenu} />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <Suspense fallback={<Loading />}>
-          <Outlet />
-        </Suspense>
-      </div>
+    <div style={{ padding: '32px 40px', maxWidth: 960, margin: 0 }}>
+      <nav style={tabRowStyle} aria-label="Health record sections">
+        {TABS.map((tab) => (
+          <NavLink key={tab.href} to={tab.href} style={({ isActive }) => tabStyle(isActive)}>
+            {tab.label}
+          </NavLink>
+        ))}
+      </nav>
+      <Suspense fallback={<Loading />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }
