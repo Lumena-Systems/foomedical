@@ -1,6 +1,5 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Box, Title } from '@mantine/core';
 import type { CarePlan } from '@medplum/fhirtypes';
 import { ResourceTable, useMedplum } from '@medplum/react';
 import type { JSX } from 'react';
@@ -13,13 +12,24 @@ export function ActionItem(): JSX.Element {
   const resource: CarePlan = medplum.readResource('CarePlan', itemId as string).read();
 
   return (
-    <Box p="xl">
-      <Title order={2} mb="md">
+    <div style={{ maxWidth: 800 }}>
+      <h1
+        style={{
+          fontFamily: 'var(--font-serif)',
+          fontSize: 28,
+          fontWeight: 500,
+          letterSpacing: '-0.02em',
+          color: 'var(--fg-primary)',
+          margin: '0 0 16px',
+        }}
+      >
         {resource.title}
-      </Title>
-      <InfoSection title="Action Item">
-        <ResourceTable value={resource} ignoreMissingValues />
+      </h1>
+      <InfoSection title="Action item">
+        <div style={{ padding: '8px 20px' }}>
+          <ResourceTable value={resource} ignoreMissingValues />
+        </div>
       </InfoSection>
-    </Box>
+    </div>
   );
 }

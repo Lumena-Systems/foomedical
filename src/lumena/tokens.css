@@ -1,0 +1,157 @@
+/* ============================================================
+   Lumena Design System — Global Tokens
+   Applied to :root so the entire app inherits warm-paper neutrals,
+   deep ink text, twilight brand, and the Newsreader / Inter Tight
+   / IBM Plex Mono type pairing.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --paper-0:   oklch(1     0     0);
+  --paper-50:  oklch(0.992 0.004 85);
+  --paper-100: oklch(0.982 0.006 85);
+  --paper-150: oklch(0.970 0.008 85);
+  --paper-200: oklch(0.952 0.010 85);
+  --paper-300: oklch(0.920 0.010 85);
+  --paper-400: oklch(0.860 0.012 85);
+  --paper-500: oklch(0.740 0.014 85);
+
+  --ink-600:   oklch(0.560 0.014 250);
+  --ink-700:   oklch(0.420 0.016 250);
+  --ink-800:   oklch(0.290 0.020 250);
+  --ink-900:   oklch(0.190 0.024 250);
+  --ink-950:   oklch(0.130 0.028 250);
+  --ink-1000:  oklch(0.060 0.020 250);
+
+  --twilight-50:  oklch(0.970 0.014 215);
+  --twilight-100: oklch(0.940 0.028 215);
+  --twilight-200: oklch(0.890 0.045 215);
+  --twilight-300: oklch(0.820 0.062 215);
+  --twilight-400: oklch(0.700 0.072 215);
+  --twilight-500: oklch(0.560 0.078 215);
+  --twilight-600: oklch(0.460 0.072 215);
+  --twilight-700: oklch(0.360 0.060 215);
+  --twilight-800: oklch(0.260 0.044 215);
+  --twilight-900: oklch(0.180 0.032 215);
+
+  --lantern-50:  oklch(0.972 0.022 75);
+  --lantern-100: oklch(0.945 0.040 75);
+  --lantern-200: oklch(0.900 0.075 75);
+  --lantern-300: oklch(0.840 0.110 75);
+  --lantern-400: oklch(0.760 0.130 75);
+  --lantern-500: oklch(0.660 0.130 75);
+  --lantern-600: oklch(0.540 0.110 75);
+  --lantern-700: oklch(0.420 0.085 75);
+
+  --success:    oklch(0.520 0.090 155);
+  --success-bg: oklch(0.965 0.020 155);
+  --success-border: oklch(0.880 0.045 155);
+
+  --warning:    oklch(0.580 0.120 65);
+  --warning-bg: oklch(0.970 0.030 70);
+  --warning-border: oklch(0.870 0.070 70);
+
+  --danger:     oklch(0.520 0.150 25);
+  --danger-bg:  oklch(0.965 0.022 25);
+  --danger-border: oklch(0.870 0.060 25);
+
+  --info:       oklch(0.530 0.080 245);
+  --info-bg:    oklch(0.965 0.018 245);
+  --info-border: oklch(0.870 0.040 245);
+
+  --ai-fg:      var(--lantern-700);
+  --ai-bg:      var(--lantern-50);
+  --ai-border:  var(--lantern-200);
+
+  --bg-base:    var(--paper-50);
+  --bg-subtle:  var(--paper-100);
+  --bg-muted:   var(--paper-200);
+  --bg-card:    var(--paper-0);
+  --bg-inverse: var(--ink-950);
+
+  --bg-button:  var(--ink-900);
+  --bg-button-hover: var(--ink-800);
+  --bg-button-press: var(--ink-1000);
+
+  --bg-brand:   var(--twilight-500);
+  --bg-brand-hover: var(--twilight-600);
+  --bg-brand-press: var(--twilight-700);
+
+  --fg-primary:    var(--ink-900);
+  --fg-secondary:  var(--ink-700);
+  --fg-muted:      var(--ink-600);
+  --fg-disabled:   var(--paper-500);
+  --fg-on-brand:   var(--paper-50);
+  --fg-on-inverse: var(--paper-50);
+  --fg-link:       var(--twilight-700);
+  --fg-link-hover: var(--twilight-800);
+
+  --border-quiet:   var(--paper-300);
+  --border-default: var(--paper-400);
+  --border-strong:  var(--paper-500);
+  --border-focus:   var(--twilight-500);
+
+  --font-serif: "Newsreader", "Source Serif Pro", "Charter", Georgia, "Times New Roman", serif;
+  --font-sans:  "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono:  "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px oklch(0.13 0.028 250 / 0.05);
+  --shadow-md: 0 4px 14px oklch(0.13 0.028 250 / 0.06),
+               0 1px 3px  oklch(0.13 0.028 250 / 0.04);
+  --shadow-lg: 0 16px 48px oklch(0.13 0.028 250 / 0.10),
+               0 2px 6px   oklch(0.13 0.028 250 / 0.04);
+
+  --dur-micro:  120ms;
+  --dur-short:  180ms;
+  --dur-medium: 240ms;
+  --dur-long:   320ms;
+
+  --ease-out:    cubic-bezier(0.2, 0, 0, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-base);
+  color: var(--fg-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  font-feature-settings: "ss01", "ss02", "tnum", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Mantine override layer — keep Mantine's structural classes,
+   nudge its visual tokens onto Lumena. Scoped to .mantine-* classnames
+   so we don't reach beyond Mantine. */
+:where([class*="mantine-"]) {
+  font-family: var(--font-sans);
+}
+
+.mantine-Title-root,
+:where(h1, h2, h3) {
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+  color: var(--fg-primary);
+  font-weight: 600;
+}
+
+/* Display-style headings — opt-in via .lm-display */
+.lm-display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--fg-primary);
+}

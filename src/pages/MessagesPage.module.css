@@ -2,7 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  height: calc(100vh - var(--app-shell-header-height, 0));
+  height: calc(100vh - 52px);
   overflow: hidden;
   flex: 1;
+  background: var(--bg-base);
+  font-family: var(--font-sans);
+  color: var(--fg-primary);
 }

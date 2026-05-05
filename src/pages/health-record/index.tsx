@@ -1,6 +1,5 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Container, Group } from '@mantine/core';
 import { Suspense } from 'react';
 import type { JSX } from 'react';
 import { Outlet } from 'react-router';
@@ -9,11 +8,11 @@ import { SideMenu } from '../../components/SideMenu';
 import { measurementsMeta } from './Measurement.data';
 
 const sideMenu = {
-  title: 'Health Record',
+  title: 'Health record',
   menu: [
-    { name: 'Lab Results', href: '/health-record/lab-results' },
+    { name: 'Lab results', href: '/health-record/lab-results' },
     { name: 'Medications', href: '/health-record/medications' },
-    { name: 'Questionnaire Responses', href: '/health-record/questionnaire-responses' },
+    { name: 'Questionnaire responses', href: '/health-record/questionnaire-responses' },
     { name: 'Vaccines', href: '/health-record/vaccines' },
     {
       name: 'Vitals',
@@ -28,15 +27,22 @@ const sideMenu = {
 
 export function HealthRecord(): JSX.Element {
   return (
-    <Container>
-      <Group align="top">
-        <SideMenu {...sideMenu} />
-        <div style={{ width: 800, flex: 800 }}>
-          <Suspense fallback={<Loading />}>
-            <Outlet />
-          </Suspense>
-        </div>
-      </Group>
-    </Container>
+    <div
+      style={{
+        display: 'flex',
+        gap: 24,
+        maxWidth: 1200,
+        margin: '0 auto',
+        padding: 24,
+        alignItems: 'flex-start',
+      }}
+    >
+      <SideMenu {...sideMenu} />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <Suspense fallback={<Loading />}>
+          <Outlet />
+        </Suspense>
+      </div>
+    </div>
   );
 }

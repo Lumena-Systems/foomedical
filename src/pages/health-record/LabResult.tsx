@@ -1,6 +1,5 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Box } from '@mantine/core';
 import type { DiagnosticReport } from '@medplum/fhirtypes';
 import { DiagnosticReportDisplay, useMedplum } from '@medplum/react';
 import type { JSX } from 'react';
@@ -13,10 +12,10 @@ export function LabResult(): JSX.Element {
   const resource: DiagnosticReport = medplum.readResource('DiagnosticReport', resultId).read();
 
   return (
-    <Box p="xl">
+    <div style={{ maxWidth: 800 }}>
       <InfoSection>
         <DiagnosticReportDisplay value={resource} />
       </InfoSection>
-    </Box>
+    </div>
   );
 }

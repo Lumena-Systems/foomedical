@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Card, CloseButton, Title } from '@mantine/core';
 import type { JSX, ReactNode } from 'react';
-import classes from './InfoSection.module.css';
+import { Eyebrow, Icon } from '../lumena/primitives';
+import { ICONS } from '../lumena/icons';
 
 interface InfoSectionProps {
   readonly title?: string | JSX.Element;
@@ -14,16 +14,49 @@ interface InfoSectionProps {
 
 export function InfoSection({ title, children, onButtonClick, id = '' }: InfoSectionProps): JSX.Element {
   return (
-    <Card withBorder radius="md" shadow="sm" p="xl" mb="xl" w="100%">
+    <div
+      style={{
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-quiet)',
+        borderRadius: 8,
+        marginBottom: 24,
+        width: '100%',
+      }}
+    >
       {title && (
-        <Card.Section className={classes.titleSection}>
-          <Title order={4} className={classes.title}>
-            {title}
-          </Title>
-          {onButtonClick && <CloseButton onClick={() => onButtonClick(id)} />}
-        </Card.Section>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '16px 20px',
+            borderBottom: '1px solid var(--border-quiet)',
+          }}
+        >
+          {typeof title === 'string' ? <Eyebrow>{title}</Eyebrow> : title}
+          {onButtonClick && (
+            <button
+              onClick={() => onButtonClick(id)}
+              aria-label="Close"
+              style={{
+                width: 24,
+                height: 24,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--fg-muted)',
+                background: 'transparent',
+                border: 0,
+                cursor: 'pointer',
+                borderRadius: 4,
+              }}
+            >
+              <Icon d={ICONS.plus} size={14} style={{ transform: 'rotate(45deg)' }} />
+            </button>
+          )}
+        </div>
       )}
-      {children}
-    </Card>
+      <div style={{ padding: '4px 0' }}>{children}</div>
+    </div>
   );
 }

@@ -1,15 +1,13 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { AppShell } from '@mantine/core';
 import { ErrorBoundary, useMedplum } from '@medplum/react';
 import { Suspense } from 'react';
 import type { JSX } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
-import { Router } from './Router';
-import { Footer } from './components/Footer';
-import { Header } from './components/Header';
 import { Loading } from './components/Loading';
+import { AppShell } from './lumena/AppShell';
 import { RegisterPage } from './pages/RegisterPage';
+import { Router } from './Router';
 import { SignInPage } from './pages/SignInPage';
 import { LandingPage } from './pages/landing';
 
@@ -32,16 +30,12 @@ export function App(): JSX.Element | null {
   }
 
   return (
-    <AppShell header={{ height: 80 }}>
-      <Header />
-      <AppShell.Main>
-        <ErrorBoundary>
-          <Suspense fallback={<Loading />}>
-            <Router />
-          </Suspense>
-        </ErrorBoundary>
-      </AppShell.Main>
-      <Footer />
+    <AppShell>
+      <ErrorBoundary>
+        <Suspense fallback={<Loading />}>
+          <Router />
+        </Suspense>
+      </ErrorBoundary>
     </AppShell>
   );
 }

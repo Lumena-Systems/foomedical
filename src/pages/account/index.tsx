@@ -1,6 +1,5 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Container, Group } from '@mantine/core';
 import { Suspense } from 'react';
 import type { JSX } from 'react';
 import { Outlet } from 'react-router';
@@ -17,15 +16,15 @@ const sideMenu = {
 
 export function AccountPage(): JSX.Element {
   return (
-    <Container>
-      <Group align="top">
+    <div style={{ padding: 24, maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24 }}>
         <SideMenu {...sideMenu} />
-        <div style={{ width: 800, flex: 800 }}>
-          <Suspense fallback={<div>Loading...</div>}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <Suspense fallback={<div style={{ color: 'var(--fg-muted)', fontSize: 14 }}>Loading…</div>}>
             <Outlet />
           </Suspense>
         </div>
-      </Group>
-    </Container>
+      </div>
+    </div>
   );
 }

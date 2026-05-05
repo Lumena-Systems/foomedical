@@ -1,18 +1,17 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Box, Stack, Text, Title, useMantineTheme } from '@mantine/core';
 import { formatDateTime, getReferenceString } from '@medplum/core';
 import type { Patient } from '@medplum/fhirtypes';
 import { useMedplum, useMedplumProfile } from '@medplum/react';
-import { IconChevronRight } from '@tabler/icons-react';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router';
 import { InfoButton } from '../../components/InfoButton';
 import { InfoSection } from '../../components/InfoSection';
+import { ICONS } from '../../lumena/icons';
+import { Icon } from '../../lumena/primitives';
 
 export function Responses(): JSX.Element {
   const medplum = useMedplum();
-  const theme = useMantineTheme();
   const navigate = useNavigate();
   const profile = useMedplumProfile() as Patient;
   const responses = medplum
@@ -20,22 +19,36 @@ export function Responses(): JSX.Element {
     .read();
 
   return (
-    <Box p="xl">
-      <Title mb="lg">Questionnaire Responses</Title>
-      <InfoSection title="Questionnaire Responses">
-        <Stack gap={0}>
-          {responses.map((resp) => (
-            <InfoButton key={resp.id} onClick={() => navigate(`./${resp.id}`)?.catch(console.error)}>
-              <div>
-                <Text c={theme.primaryColor} fw={500} mb={4}>
-                  {formatDateTime(resp.authored)}
-                </Text>
-              </div>
-              <IconChevronRight color={theme.colors.gray[5]} />
-            </InfoButton>
-          ))}
-        </Stack>
+    <div>
+      <h1
+        style={{
+          fontFamily: 'var(--font-serif)',
+          fontSize: 28,
+          fontWeight: 500,
+          letterSpacing: '-0.02em',
+          color: 'var(--fg-primary)',
+          margin: '0 0 16px',
+        }}
+      >
+        Questionnaire responses
+      </h1>
+      <InfoSection title="Questionnaire responses">
+        {responses.map((resp) => (
+          <InfoButton key={resp.id} onClick={() => navigate(`./${resp.id}`)?.catch(console.error)}>
+            <div
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 13,
+                color: 'var(--fg-primary)',
+                fontWeight: 500,
+              }}
+            >
+              {formatDateTime(resp.authored)}
+            </div>
+            <Icon d={ICONS.chevronRight} size={16} style={{ color: 'var(--fg-muted)' }} />
+          </InfoButton>
+        ))}
       </InfoSection>
-    </Box>
+    </div>
   );
 }

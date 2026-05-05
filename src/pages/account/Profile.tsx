@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Box, Button, InputLabel, LoadingOverlay, NativeSelect, Stack, TextInput, Title } from '@mantine/core';
+import { InputLabel, LoadingOverlay, NativeSelect, Stack, TextInput } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { formatFamilyName, formatGivenName, formatHumanName, normalizeErrorString } from '@medplum/core';
 import type { HumanName, Patient } from '@medplum/fhirtypes';
@@ -9,6 +9,7 @@ import { IconCircleCheck, IconCircleOff } from '@tabler/icons-react';
 import type { JSX } from 'react';
 import { useState } from 'react';
 import { InfoSection } from '../../components/InfoSection';
+import { Btn } from '../../lumena/primitives';
 
 export function Profile(): JSX.Element | null {
   const medplum = useMedplum();
@@ -57,64 +58,79 @@ export function Profile(): JSX.Element | null {
   }
 
   return (
-    <Box p="xl" pos="relative">
+    <div style={{ position: 'relative' }}>
       <LoadingOverlay visible={loading} />
       <Form onSubmit={handleProfileEdit}>
-        <Stack align="center">
-          <ResourceAvatar size={200} radius={100} value={profile} />
-          <Title order={2}>{formatHumanName(profile.name?.[0])}</Title>
-          <InfoSection title="Personal Information">
-            <Box p="xl">
-              <Stack>
-                <TextInput
-                  label="First Name"
-                  name="givenName"
-                  defaultValue={formatGivenName(profile.name?.[0] as HumanName)}
-                />
-                <TextInput
-                  label="Last Name"
-                  name="familyName"
-                  defaultValue={formatFamilyName(profile.name?.[0] as HumanName)}
-                />
-                <NativeSelect
-                  label="Gender"
-                  name="gender"
-                  defaultValue={profile.gender}
-                  data={['', 'female', 'male', 'other', 'unknown']}
-                />
-                <TextInput label="Birth Date" name="birthDate" type="date" defaultValue={profile.birthDate} />
-                <Button type="submit" mr="auto">
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginBottom: 24 }}>
+          <ResourceAvatar size={120} radius={60} value={profile} />
+          <h1
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: 22,
+              fontWeight: 600,
+              letterSpacing: '-0.01em',
+              color: 'var(--fg-primary)',
+              margin: 0,
+            }}
+          >
+            {formatHumanName(profile.name?.[0])}
+          </h1>
+        </div>
+        <InfoSection title="Personal information">
+          <div style={{ padding: 20 }}>
+            <Stack>
+              <TextInput
+                label="First name"
+                name="givenName"
+                defaultValue={formatGivenName(profile.name?.[0] as HumanName)}
+              />
+              <TextInput
+                label="Last name"
+                name="familyName"
+                defaultValue={formatFamilyName(profile.name?.[0] as HumanName)}
+              />
+              <NativeSelect
+                label="Gender"
+                name="gender"
+                defaultValue={profile.gender}
+                data={['', 'female', 'male', 'other', 'unknown']}
+              />
+              <TextInput label="Birth date" name="birthDate" type="date" defaultValue={profile.birthDate} />
+              <div>
+                <Btn type="submit" variant="primary" size="md">
                   Save
-                </Button>
-              </Stack>
-            </Box>
-          </InfoSection>
-          <InfoSection title="Contact Information">
-            <Box p="xl">
-              <Stack>
-                <TextInput
-                  label="Email"
-                  name="email"
-                  defaultValue={profile.telecom?.find((t) => t.system === 'email')?.value}
-                  disabled
+                </Btn>
+              </div>
+            </Stack>
+          </div>
+        </InfoSection>
+        <InfoSection title="Contact information">
+          <div style={{ padding: 20 }}>
+            <Stack>
+              <TextInput
+                label="Email"
+                name="email"
+                defaultValue={profile.telecom?.find((t) => t.system === 'email')?.value}
+                disabled
+              />
+              <Stack gap={0}>
+                <InputLabel htmlFor="address">Address</InputLabel>
+                <AddressInput
+                  name="address"
+                  path="Patient.address"
+                  defaultValue={address}
+                  onChange={(address) => setAddress(address)}
                 />
-                <Stack gap={0}>
-                  <InputLabel htmlFor="address">Address</InputLabel>
-                  <AddressInput
-                    name="address"
-                    path="Patient.address"
-                    defaultValue={address}
-                    onChange={(address) => setAddress(address)}
-                  />
-                </Stack>
-                <Button type="submit" mr="auto">
-                  Save
-                </Button>
               </Stack>
-            </Box>
-          </InfoSection>
-        </Stack>
+              <div>
+                <Btn type="submit" variant="primary" size="md">
+                  Save
+                </Btn>
+              </div>
+            </Stack>
+          </div>
+        </InfoSection>
       </Form>
-    </Box>
+    </div>
   );
 }

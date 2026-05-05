@@ -1,102 +1,269 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { AppShell, Box, Button, Container, Group, Stack, Text, Title, useMantineTheme } from '@mantine/core';
-import cx from 'clsx';
 import type { JSX } from 'react';
+import { useNavigate } from 'react-router';
 import { Footer } from '../../components/Footer';
-import DoctorImage from '../../img/landingPage/doctor.jpg';
-import EngineeringImage from '../../img/landingPage/engineering.jpg';
-import LabImage from '../../img/landingPage/laboratory.jpg';
-import WorkingEnvironmentImage from '../../img/landingPage/working-environment.jpg';
+import { Btn, Eyebrow } from '../../lumena/primitives';
 import { Header } from './Header';
-import classes from './index.module.css';
 
 const features = [
   {
-    title: 'Comprehsive Care Plans',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
+    eyebrow: 'Care plans',
+    title: 'A plan written for one patient.',
+    body: 'Your clinician drafts the plan; you can read every line. No black box, no scoring engine deciding for you.',
   },
   {
-    title: 'No hidden fees',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
+    eyebrow: 'Pricing',
+    title: 'No hidden fees.',
+    body: 'A single, published rate per visit. No surprise statements, no balance billing, no negotiation games.',
   },
   {
-    title: '24/7 Messaging',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
+    eyebrow: 'Messaging',
+    title: 'Reach a real person.',
+    body: 'Send a message and get a written reply from a clinician on your team — usually the same day, always within 24 hours.',
   },
   {
-    title: 'Clinically rigorous',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
+    eyebrow: 'Standards',
+    title: 'Clinically rigorous.',
+    body: 'Every protocol is grounded in current evidence and reviewed quarterly. We tell you what we do not yet know.',
   },
 ];
 
 export function LandingPage(): JSX.Element {
-  const theme = useMantineTheme();
+  const navigate = useNavigate();
   return (
-    <AppShell className={classes.outer} header={{ height: 100 }}>
+    <div style={{ background: 'var(--bg-base)', color: 'var(--fg-primary)', minHeight: '100vh' }}>
       <Header />
-      <AppShell.Main className={classes.outer}>
-        <img className={classes.heroImage1} src={WorkingEnvironmentImage} alt="Working Environment" />
-        <Container>
-          <div className={classes.inner}>
-            <div className={classes.content}>
-              <Title className={classes.title}>
-                An extraordinary
-                <br />
-                <span className={classes.highlight}>doctor&apos;s office</span>
-              </Title>
-              <Text size="lg" c="dimmed" mt="md">
-                This is not actually a medical practice, this is a sample open source application for developers to
-                clone, customize and run.
-              </Text>
-              <Group mt={30}>
-                <Button radius="xl" size="md" className={classes.control}>
-                  Get started
-                </Button>
-                <Button variant="default" radius="xl" size="md" className={classes.control}>
-                  Source code
-                </Button>
-              </Group>
+      <main>
+        {/* Hero */}
+        <section
+          style={{
+            maxWidth: 1120,
+            margin: '0 auto',
+            padding: '120px 32px 96px',
+          }}
+        >
+          <div style={{ maxWidth: 820 }}>
+            <Eyebrow style={{ marginBottom: 32, color: 'var(--fg-muted)' }}>Foo Medical &middot; Primary care</Eyebrow>
+            <h1
+              className="lm-display"
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontWeight: 400,
+                fontSize: 'clamp(48px, 8vw, 84px)',
+                letterSpacing: '-0.02em',
+                lineHeight: 1.05,
+                margin: 0,
+                color: 'var(--fg-primary)',
+              }}
+            >
+              An ordinary <em style={{ fontStyle: 'italic' }}>doctor&rsquo;s office</em>,
+              <br />
+              run a little more carefully.
+            </h1>
+            <p
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 18,
+                lineHeight: 1.55,
+                color: 'var(--fg-secondary)',
+                marginTop: 32,
+                marginBottom: 0,
+                maxWidth: 620,
+              }}
+            >
+              This is a sample application built on Medplum &mdash; a working primary-care patient portal you can fork,
+              read, and run yourself. No marketing varnish, no pretend testimonials.
+            </p>
+            <div style={{ display: 'flex', gap: 12, marginTop: 40, flexWrap: 'wrap' }}>
+              <Btn variant="primary" size="lg" onClick={() => navigate('/register')?.catch(console.error)}>
+                Create an account
+              </Btn>
+              <Btn variant="secondary" size="lg" onClick={() => navigate('/signin')?.catch(console.error)}>
+                Sign in
+              </Btn>
             </div>
-            <img className={classes.heroImage2} src={DoctorImage} alt="Doctor" />
           </div>
-        </Container>
-        <Container>
-          <div className={classes.inner}>
-            <div style={{ width: 500 }}>
-              <Title order={3} fw={500} c={theme.primaryColor} mb="lg">
-                Healthcare
-              </Title>
-              <Title order={1} fw={500} mb="md">
-                A better way to get care
-              </Title>
-              <Text size="xl" c="gray">
-                Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in
-                accusamus quisquam.
-              </Text>
-            </div>
-            <img className={classes.heroImage3} src={LabImage} alt="Laboratory" />
+        </section>
+
+        {/* Divider */}
+        <div
+          style={{
+            maxWidth: 1120,
+            margin: '0 auto',
+            padding: '0 32px',
+          }}
+        >
+          <hr
+            style={{
+              border: 'none',
+              borderTop: '1px solid var(--border-quiet)',
+              margin: 0,
+            }}
+          />
+        </div>
+
+        {/* What this is */}
+        <section
+          style={{
+            maxWidth: 1120,
+            margin: '0 auto',
+            padding: '96px 32px',
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 280px) minmax(0, 1fr)',
+            gap: 64,
+            alignItems: 'start',
+          }}
+        >
+          <Eyebrow>What this is</Eyebrow>
+          <div>
+            <h2
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontWeight: 400,
+                fontSize: 'clamp(28px, 4vw, 44px)',
+                letterSpacing: '-0.02em',
+                lineHeight: 1.1,
+                margin: 0,
+                color: 'var(--fg-primary)',
+                maxWidth: 720,
+              }}
+            >
+              A reference implementation for developers building patient-facing care.
+            </h2>
+            <p
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 17,
+                lineHeight: 1.6,
+                color: 'var(--fg-secondary)',
+                marginTop: 28,
+                marginBottom: 0,
+                maxWidth: 640,
+              }}
+            >
+              Foo Medical is open source. The code, the data shapes, and the integration patterns are all on GitHub. Use
+              it to learn how a FHIR-backed portal is wired together, or as a starting point for your own clinic.
+            </p>
           </div>
-        </Container>
-        <Container>
-          <div className={cx(classes.inner, classes.featureSection)}>
-            <Stack align="flex-end">
-              {features.map((feature, index) => (
-                <Box key={`feature-${index}`} className={classes.featureBox}>
-                  <Text className={classes.featureTitle}>{feature.title}</Text>
-                  <Text className={classes.featureDescription}>{feature.description}</Text>
-                </Box>
+        </section>
+
+        {/* Features grid */}
+        <section
+          style={{
+            background: 'var(--bg-subtle)',
+            borderTop: '1px solid var(--border-quiet)',
+            borderBottom: '1px solid var(--border-quiet)',
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1120,
+              margin: '0 auto',
+              padding: '96px 32px',
+            }}
+          >
+            <Eyebrow style={{ marginBottom: 48 }}>How it works</Eyebrow>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                gap: 1,
+                background: 'var(--border-quiet)',
+                border: '1px solid var(--border-quiet)',
+              }}
+            >
+              {features.map((f) => (
+                <div
+                  key={f.title}
+                  style={{
+                    background: 'var(--bg-card)',
+                    padding: '40px 32px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 12,
+                  }}
+                >
+                  <Eyebrow>{f.eyebrow}</Eyebrow>
+                  <h3
+                    style={{
+                      fontFamily: 'var(--font-serif)',
+                      fontWeight: 500,
+                      fontSize: 22,
+                      letterSpacing: '-0.01em',
+                      lineHeight: 1.2,
+                      margin: '8px 0 0',
+                      color: 'var(--fg-primary)',
+                    }}
+                  >
+                    {f.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: 15,
+                      lineHeight: 1.6,
+                      color: 'var(--fg-secondary)',
+                      margin: 0,
+                    }}
+                  >
+                    {f.body}
+                  </p>
+                </div>
               ))}
-            </Stack>
-            <img className={classes.heroImage4} src={EngineeringImage} alt="Laboratory" />
+            </div>
           </div>
-        </Container>
-      </AppShell.Main>
+        </section>
+
+        {/* Closing CTA */}
+        <section
+          style={{
+            maxWidth: 1120,
+            margin: '0 auto',
+            padding: '120px 32px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: 28,
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontWeight: 400,
+              fontSize: 'clamp(32px, 5vw, 56px)',
+              letterSpacing: '-0.02em',
+              lineHeight: 1.05,
+              margin: 0,
+              color: 'var(--fg-primary)',
+              maxWidth: 720,
+            }}
+          >
+            Ready to look around?
+          </h2>
+          <p
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: 17,
+              lineHeight: 1.6,
+              color: 'var(--fg-secondary)',
+              margin: 0,
+              maxWidth: 560,
+            }}
+          >
+            Create a sample account &mdash; you can clear the data anytime, and nothing here is real medical care.
+          </p>
+          <div style={{ display: 'flex', gap: 12, marginTop: 4, flexWrap: 'wrap' }}>
+            <Btn variant="primary" size="lg" onClick={() => navigate('/register')?.catch(console.error)}>
+              Create an account
+            </Btn>
+            <Btn variant="ghost" size="lg" onClick={() => navigate('/signin')?.catch(console.error)}>
+              Sign in
+            </Btn>
+          </div>
+        </section>
+      </main>
       <Footer />
-    </AppShell>
+    </div>
   );
 }

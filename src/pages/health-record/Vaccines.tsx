@@ -1,15 +1,15 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Anchor, Box, Stack, Text, Title, useMantineTheme } from '@mantine/core';
 import { formatDate, getReferenceString } from '@medplum/core';
 import type { Immunization, Patient } from '@medplum/fhirtypes';
 import { StatusBadge, useMedplum } from '@medplum/react';
-import { IconCalendar, IconMapPin } from '@tabler/icons-react';
+import { IconMapPin } from '@tabler/icons-react';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router';
 import { InfoButton } from '../../components/InfoButton';
 import { InfoSection } from '../../components/InfoSection';
-import PillsImage from '../../img/pills.svg';
+import { ICONS } from '../../lumena/icons';
+import { Icon } from '../../lumena/primitives';
 
 export function Vaccines(): JSX.Element {
   const medplum = useMedplum();
@@ -20,22 +20,36 @@ export function Vaccines(): JSX.Element {
   const pastVaccines = vaccines.filter((v) => !v.occurrenceDateTime || v.occurrenceDateTime <= today);
 
   return (
-    <Box p="xl">
-      <Title mb="lg">Vaccines</Title>
+    <div>
+      <h1
+        style={{
+          fontFamily: 'var(--font-serif)',
+          fontSize: 28,
+          fontWeight: 500,
+          letterSpacing: '-0.02em',
+          color: 'var(--fg-primary)',
+          margin: '0 0 16px',
+        }}
+      >
+        Vaccines
+      </h1>
       <InfoSection title="Active upcoming vaccines">
         {activeVaccines.length === 0 ? (
-          <Box p="xl" style={{ textAlign: 'center' }}>
-            <Stack align="center" w={500} m="auto">
-              <img src={PillsImage} width={160} height={160} />
-              <Title order={2} fw={900}>
-                No upcoming vaccines available
-              </Title>
-              <Text c="gray">
-                If you think you&apos;re missing upcoming vaccines that should be here, please{' '}
-                <Anchor href="#">contact our medical team</Anchor>.
-              </Text>
-            </Stack>
-          </Box>
+          <div style={{ padding: '32px 20px', textAlign: 'center', color: 'var(--fg-muted)' }}>
+            <div style={{ fontSize: 14, color: 'var(--fg-secondary)', marginBottom: 4 }}>
+              No upcoming vaccines available.
+            </div>
+            <div style={{ fontSize: 13, color: 'var(--fg-muted)' }}>
+              If you think you&apos;re missing upcoming vaccines that should be here, please{' '}
+              <a
+                href="#"
+                style={{ color: 'var(--fg-link)', textDecoration: 'underline', textUnderlineOffset: 2 }}
+              >
+                contact our medical team
+              </a>
+              .
+            </div>
+          </div>
         ) : (
           <VaccineList vaccines={activeVaccines} />
         )}
@@ -45,41 +59,63 @@ export function Vaccines(): JSX.Element {
           <VaccineList vaccines={pastVaccines} />
         </InfoSection>
       )}
-    </Box>
+    </div>
   );
 }
 
 function VaccineList({ vaccines }: { vaccines: Immunization[] }): JSX.Element {
   return (
-    <Stack gap={0}>
+    <>
       {vaccines.map((vaccine) => (
-        <Vaccine key={vaccine.id} vaccine={vaccine} />
+        <VaccineRow key={vaccine.id} vaccine={vaccine} />
       ))}
-    </Stack>
+    </>
   );
 }
 
-function Vaccine({ vaccine }: { vaccine: Immunization }): JSX.Element {
-  const theme = useMantineTheme();
+function VaccineRow({ vaccine }: { vaccine: Immunization }): JSX.Element {
   const navigate = useNavigate();
   return (
     <InfoButton onClick={() => navigate(`./${vaccine.id}`)?.catch(console.error)}>
       <div>
-        <Text c={theme.primaryColor} fw={500} mb={8}>
+        <div style={{ color: 'var(--twilight-700)', fontWeight: 500, marginBottom: 6 }}>
           {vaccine.vaccineCode?.text}
-        </Text>
-        <Text c="gray.6">
-          <IconMapPin size={16} style={{ marginRight: 4 }} />
-          {vaccine.location?.display}
-        </Text>
+        </div>
+        {vaccine.location?.display && (
+          <div
+            style={{
+              color: 'var(--fg-muted)',
+              fontSize: 13,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            <IconMapPin size={14} stroke={1.5} color="currentColor" />
+            {vaccine.location.display}
+          </div>
+        )}
       </div>
-      <div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <StatusBadge status={vaccine.status} />
         {vaccine.occurrenceDateTime && (
-          <Text c="gray.6">
-            <IconCalendar size={16} style={{ marginRight: 4 }} />
-            <time dateTime={vaccine.occurrenceDateTime}>{formatDate(vaccine.occurrenceDateTime)}</time>
-          </Text>
+          <div
+            style={{
+              color: 'var(--fg-muted)',
+              fontSize: 13,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            <Icon d={ICONS.calendar} size={14} style={{ color: 'var(--fg-muted)' }} />
+            <time
+              dateTime={vaccine.occurrenceDateTime}
+              style={{ fontFamily: 'var(--font-mono)', fontSize: 13 }}
+            >
+              {formatDate(vaccine.occurrenceDateTime)}
+            </time>
+          </div>
         )}
       </div>
     </InfoButton>

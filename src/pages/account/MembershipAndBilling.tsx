@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Box, Stack, Table, Title } from '@mantine/core';
+import { Table } from '@mantine/core';
 import { formatCoding, getReferenceString } from '@medplum/core';
 import type { Coverage, Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
@@ -13,9 +13,9 @@ function CoverageTable({ coverages }: { coverages: Coverage[] }): JSX.Element {
     <Table>
       <Table.Thead>
         <Table.Tr>
-          <Table.Th>Payor Name</Table.Th>
+          <Table.Th>Payor name</Table.Th>
           <Table.Th>Subscriber ID</Table.Th>
-          <Table.Th>Relationship to Subscriber</Table.Th>
+          <Table.Th>Relationship to subscriber</Table.Th>
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>
@@ -31,6 +31,12 @@ function CoverageTable({ coverages }: { coverages: Coverage[] }): JSX.Element {
   );
 }
 
+const EMPTY_STATE_STYLE = {
+  padding: 20,
+  color: 'var(--fg-muted)',
+  fontSize: 14,
+} as const;
+
 export function MembershipAndBilling(): JSX.Element {
   const medplum = useMedplum();
   const patient = medplum.getProfile() as Patient;
@@ -42,28 +48,39 @@ export function MembershipAndBilling(): JSX.Element {
   const payments = medplum.searchResources('PaymentNotice').read();
 
   return (
-    <Box p="xl">
-      <Title mb="xl">Membership & Billing</Title>
+    <div>
+      <h1
+        style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: 22,
+          fontWeight: 600,
+          letterSpacing: '-0.01em',
+          color: 'var(--fg-primary)',
+          margin: '0 0 24px',
+        }}
+      >
+        Membership & billing
+      </h1>
       <InfoSection title="Coverage">
         {coverages.length === 0 ? (
-          <Box p="xl">No coverage</Box>
+          <div style={EMPTY_STATE_STYLE}>No coverage</div>
         ) : (
-          <Stack gap={0}>
+          <div style={{ padding: '0 4px' }}>
             <CoverageTable coverages={coverages} />
-          </Stack>
+          </div>
         )}
       </InfoSection>
       <InfoSection title="Payments">
         {payments.length === 0 ? (
-          <Box p="xl">No payments</Box>
+          <div style={EMPTY_STATE_STYLE}>No payments</div>
         ) : (
-          <Stack gap={0}>
+          <div>
             {payments.map((p) => (
               <InfoButton key={p.id}>{p.id}</InfoButton>
             ))}
-          </Stack>
+          </div>
         )}
       </InfoSection>
-    </Box>
+    </div>
   );
 }

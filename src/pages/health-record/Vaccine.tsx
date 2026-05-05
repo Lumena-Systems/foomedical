@@ -1,6 +1,5 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Box, Title } from '@mantine/core';
 import type { Immunization } from '@medplum/fhirtypes';
 import { ResourceTable, useMedplum } from '@medplum/react';
 import type { JSX } from 'react';
@@ -13,13 +12,24 @@ export function Vaccine(): JSX.Element {
   const vaccine: Immunization = medplum.readResource('Immunization', vaccineId).read();
 
   return (
-    <Box p="xl">
-      <Title order={2} mb="md">
+    <div style={{ maxWidth: 800 }}>
+      <h1
+        style={{
+          fontFamily: 'var(--font-serif)',
+          fontSize: 28,
+          fontWeight: 500,
+          letterSpacing: '-0.02em',
+          color: 'var(--fg-primary)',
+          margin: '0 0 16px',
+        }}
+      >
         {vaccine.vaccineCode?.text}
-      </Title>
+      </h1>
       <InfoSection title="Vaccine">
-        <ResourceTable value={vaccine} ignoreMissingValues />
+        <div style={{ padding: '8px 20px' }}>
+          <ResourceTable value={vaccine} ignoreMissingValues />
+        </div>
       </InfoSection>
-    </Box>
+    </div>
   );
 }

@@ -14,13 +14,27 @@ export function PatientIntakeQuestionnairePage(): JSX.Element {
   }
 
   return (
-    <Document width={800}>
-      {isSubmitted ? (
-        <div>Thank you for submitting your form</div>
-      ) : (
-        <QuestionnaireForm questionnaire={questionnaire} onSubmit={handleQuestionnaireSubmit} />
-      )}
-    </Document>
+    <div style={{ padding: 24, maxWidth: 720, margin: '0 auto' }}>
+      <h1
+        style={{
+          fontFamily: 'var(--font-serif)',
+          fontSize: 36,
+          fontWeight: 500,
+          letterSpacing: '-0.02em',
+          color: 'var(--fg-primary)',
+          margin: '0 0 24px',
+        }}
+      >
+        Patient intake
+      </h1>
+      <Document width={800}>
+        {isSubmitted ? (
+          <p style={{ color: 'var(--fg-primary)', fontSize: 14, margin: 0 }}>Thank you for submitting your form.</p>
+        ) : (
+          <QuestionnaireForm questionnaire={questionnaire} onSubmit={handleQuestionnaireSubmit} />
+        )}
+      </Document>
+    </div>
   );
 }
 

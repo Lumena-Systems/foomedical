@@ -51,8 +51,22 @@ export function QuestionnairePage(): JSX.Element {
   }
 
   return (
-    <Document width={800}>
-      <QuestionnaireForm questionnaire={questionnaire} onSubmit={handleOnSubmit} />
-    </Document>
+    <div style={{ padding: 24, maxWidth: 720, margin: '0 auto' }}>
+      <h1
+        style={{
+          fontFamily: 'var(--font-serif)',
+          fontSize: 36,
+          fontWeight: 500,
+          letterSpacing: '-0.02em',
+          color: 'var(--fg-primary)',
+          margin: '0 0 24px',
+        }}
+      >
+        {questionnaire.title || 'Questionnaire'}
+      </h1>
+      <Document width={800}>
+        <QuestionnaireForm questionnaire={questionnaire} onSubmit={handleOnSubmit} />
+      </Document>
+    </div>
   );
 }

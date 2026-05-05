@@ -1,40 +1,48 @@
 // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
 // SPDX-License-Identifier: Apache-2.0
-import { Box, Stack, Text, Title, useMantineTheme } from '@mantine/core';
 import { getReferenceString } from '@medplum/core';
 import type { Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
-import { IconChevronRight } from '@tabler/icons-react';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router';
 import { InfoButton } from '../../components/InfoButton';
 import { InfoSection } from '../../components/InfoSection';
+import { ICONS } from '../../lumena/icons';
+import { Icon } from '../../lumena/primitives';
 
 export function Medications(): JSX.Element {
-  const theme = useMantineTheme();
   const navigate = useNavigate();
   const medplum = useMedplum();
   const patient = medplum.getProfile() as Patient;
   const medications = medplum.searchResources('MedicationRequest', 'patient=' + getReferenceString(patient)).read();
 
   return (
-    <Box p="xl">
-      <Title mb="lg">Medications</Title>
+    <div>
+      <h1
+        style={{
+          fontFamily: 'var(--font-serif)',
+          fontSize: 28,
+          fontWeight: 500,
+          letterSpacing: '-0.02em',
+          color: 'var(--fg-primary)',
+          margin: '0 0 16px',
+        }}
+      >
+        Medications
+      </h1>
       <InfoSection title="Medications">
-        <Stack gap={0}>
-          {medications.map((med) => (
-            <InfoButton key={med.id} onClick={() => navigate(`./${med.id}`)?.catch(console.error)}>
-              <div>
-                <Text c={theme.primaryColor} fw={500} mb={4}>
-                  {med?.medicationCodeableConcept?.text}
-                </Text>
-                <Text c="gray.6">{med.requester?.display}</Text>
+        {medications.map((med) => (
+          <InfoButton key={med.id} onClick={() => navigate(`./${med.id}`)?.catch(console.error)}>
+            <div>
+              <div style={{ color: 'var(--twilight-700)', fontWeight: 500, marginBottom: 4 }}>
+                {med?.medicationCodeableConcept?.text}
               </div>
-              <IconChevronRight color={theme.colors.gray[5]} />
-            </InfoButton>
-          ))}
-        </Stack>
+              <div style={{ color: 'var(--fg-muted)', fontSize: 13 }}>{med.requester?.display}</div>
+            </div>
+            <Icon d={ICONS.chevronRight} size={16} style={{ color: 'var(--fg-muted)' }} />
+          </InfoButton>
+        ))}
       </InfoSection>
-    </Box>
+    </div>
   );
 }

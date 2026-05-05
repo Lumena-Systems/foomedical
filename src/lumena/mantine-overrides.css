@@ -1,0 +1,285 @@
+/* ============================================================
+   Mantine internals — Lumena overrides
+   For components we don't directly own (rendered by @medplum/react
+   or used inline by foomedical pages), reach into Mantine's stable
+   class names and pull them onto Lumena tokens.
+   ============================================================ */
+
+/* Buttons — kill the rounded-pill default shape and any drop-shadow */
+.mantine-Button-root {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+}
+.mantine-Button-root[data-variant='filled'] {
+  background: var(--twilight-500);
+  color: var(--paper-50);
+}
+.mantine-Button-root[data-variant='filled']:hover {
+  background: var(--twilight-600);
+}
+.mantine-Button-root[data-variant='outline'],
+.mantine-Button-root[data-variant='default'] {
+  background: var(--paper-0);
+  color: var(--fg-primary);
+  border: 1px solid var(--border-default);
+}
+.mantine-Button-root[data-variant='outline']:hover,
+.mantine-Button-root[data-variant='default']:hover {
+  background: var(--paper-100);
+}
+.mantine-Button-root[data-variant='subtle'] {
+  color: var(--fg-primary);
+}
+.mantine-Button-root[data-variant='subtle']:hover {
+  background: var(--paper-200);
+}
+
+/* Inputs — calm 1px borders, twilight focus, paper background */
+.mantine-Input-input,
+.mantine-TextInput-input,
+.mantine-NativeSelect-input,
+.mantine-NumberInput-input,
+.mantine-PasswordInput-input,
+.mantine-Textarea-input,
+.mantine-Select-input {
+  background: var(--paper-0);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--fg-primary);
+  font-family: var(--font-sans);
+  box-shadow: none;
+  transition: border-color var(--dur-micro) var(--ease-out),
+              box-shadow var(--dur-micro) var(--ease-out);
+}
+.mantine-Input-input:focus,
+.mantine-Input-input:focus-within,
+.mantine-TextInput-input:focus,
+.mantine-NativeSelect-input:focus,
+.mantine-NumberInput-input:focus,
+.mantine-PasswordInput-input:focus,
+.mantine-Textarea-input:focus,
+.mantine-Select-input:focus {
+  border-color: var(--twilight-500);
+  box-shadow: 0 0 0 2px var(--twilight-200);
+  outline: 0;
+}
+
+.mantine-InputWrapper-label,
+.mantine-Input-label,
+.mantine-TextInput-label,
+.mantine-NativeSelect-label,
+.mantine-NumberInput-label,
+.mantine-PasswordInput-label,
+.mantine-Select-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--fg-muted);
+  margin-bottom: 6px;
+  font-family: var(--font-sans);
+}
+.mantine-InputWrapper-description {
+  color: var(--fg-muted);
+  font-size: 12px;
+}
+.mantine-InputWrapper-error {
+  color: var(--danger);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Modals — paper, hairline borders, no rounded toy shapes */
+.mantine-Modal-content {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-quiet);
+}
+.mantine-Modal-header {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-quiet);
+  padding: 14px 20px;
+}
+.mantine-Modal-title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: var(--fg-primary);
+}
+.mantine-Modal-body {
+  padding: 20px;
+}
+.mantine-Modal-overlay {
+  background: oklch(0.13 0.028 250 / 0.45);
+}
+
+/* Drawer */
+.mantine-Drawer-content {
+  background: var(--bg-card);
+}
+.mantine-Drawer-header {
+  border-bottom: 1px solid var(--border-quiet);
+}
+
+/* Mantine Tables (used in MembershipAndBilling and inside Medplum components) */
+.mantine-Table-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.mantine-Table-thead {
+  background: var(--paper-100);
+}
+.mantine-Table-th {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--fg-muted);
+  border-bottom: 1px solid var(--border-quiet);
+  padding: 10px 12px;
+}
+.mantine-Table-td {
+  font-size: 13px;
+  color: var(--ink-900);
+  border-bottom: 1px solid var(--border-quiet);
+  padding: 10px 12px;
+  font-variant-numeric: tabular-nums;
+}
+.mantine-Table-tr:last-child .mantine-Table-td {
+  border-bottom: 0;
+}
+
+/* Badges (inc. Medplum StatusBadge) — pill shape but quieter palette */
+.mantine-Badge-root {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 12px;
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+  height: auto;
+  line-height: 1.4;
+}
+.mantine-Badge-root[data-variant='light'][data-color='green'],
+.mantine-Badge-root[data-variant='filled'][data-color='green'] {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.mantine-Badge-root[data-variant='light'][data-color='red'],
+.mantine-Badge-root[data-variant='filled'][data-color='red'] {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+.mantine-Badge-root[data-variant='light'][data-color='yellow'],
+.mantine-Badge-root[data-variant='light'][data-color='orange'] {
+  background: var(--warning-bg);
+  color: oklch(0.45 0.12 65);
+}
+.mantine-Badge-root[data-variant='light'][data-color='blue'] {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+/* Paper / Card — no shadow lift, hairline borders */
+.mantine-Paper-root,
+.mantine-Card-root {
+  background: var(--bg-card);
+  border: 1px solid var(--border-quiet);
+  box-shadow: none;
+  border-radius: var(--radius-sm);
+}
+.mantine-Paper-root[data-with-border='true'],
+.mantine-Card-root[data-with-border='true'] {
+  border: 1px solid var(--border-quiet);
+}
+
+/* Loader / LoadingOverlay — twilight, no spin-bounce */
+.mantine-Loader-root {
+  color: var(--twilight-500);
+}
+.mantine-LoadingOverlay-overlay {
+  background: oklch(0.992 0.004 85 / 0.7);
+  backdrop-filter: blur(2px);
+}
+
+/* Anchor */
+.mantine-Anchor-root {
+  color: var(--fg-link);
+  text-decoration: underline;
+  text-decoration-color: var(--twilight-300);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.mantine-Anchor-root:hover {
+  color: var(--fg-link-hover);
+  text-decoration-color: var(--twilight-600);
+}
+
+/* Notifications */
+.mantine-Notification-root {
+  background: var(--bg-card);
+  border: 1px solid var(--border-quiet);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+.mantine-Notification-title {
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+.mantine-Notification-description {
+  color: var(--fg-secondary);
+}
+
+/* Menu / Dropdown */
+.mantine-Menu-dropdown,
+.mantine-Popover-dropdown {
+  background: var(--bg-card);
+  border: 1px solid var(--border-quiet);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 4px;
+}
+.mantine-Menu-item {
+  font-size: 13px;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+.mantine-Menu-item:hover,
+.mantine-Menu-item[data-hovered='true'] {
+  background: var(--paper-100);
+}
+
+/* Tooltip */
+.mantine-Tooltip-tooltip {
+  background: var(--ink-900);
+  color: var(--paper-50);
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+}
+
+/* Alert */
+.mantine-Alert-root {
+  border-radius: var(--radius-sm);
+  border-width: 1px;
+}
+.mantine-Alert-title {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Avatar (esp. ResourceAvatar via Medplum) */
+.mantine-Avatar-root {
+  border-radius: 999px;
+  background: var(--paper-200);
+  color: var(--fg-primary);
+}
