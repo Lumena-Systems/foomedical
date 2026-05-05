@@ -4,6 +4,7 @@ import { formatDate, formatObservationValue, getReferenceString } from '@medplum
 import type { Patient } from '@medplum/fhirtypes';
 import { useMedplum } from '@medplum/react';
 import type { CSSProperties, JSX } from 'react';
+import { EmptyState } from '../../components/EmptyState';
 
 const thStyle: CSSProperties = {
   position: 'sticky',
@@ -35,77 +36,73 @@ export function Vitals(): JSX.Element {
   const patient = medplum.getProfile() as Patient;
   const observations = medplum.searchResources('Observation', 'patient=' + getReferenceString(patient)).read();
 
+  if (observations.length === 0) {
+    return (
+      <EmptyState
+        icon="database"
+        title="No vitals recorded"
+        body="Measurements from visits or your devices will appear here."
+      />
+    );
+  }
+
   return (
-    <div>
-      <h1
+    <div
+      style={{
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-quiet)',
+        borderRadius: 8,
+        overflow: 'hidden',
+      }}
+    >
+      <table
         style={{
-          fontFamily: 'var(--font-serif)',
-          fontSize: 28,
-          fontWeight: 500,
-          letterSpacing: '-0.02em',
-          color: 'var(--fg-primary)',
-          margin: '0 0 16px',
+          width: '100%',
+          borderCollapse: 'collapse',
+          fontFamily: 'var(--font-sans)',
         }}
       >
-        Vitals
-      </h1>
-      <div
-        style={{
-          background: 'var(--bg-card)',
-          border: '1px solid var(--border-quiet)',
-          borderRadius: 8,
-          overflow: 'hidden',
-        }}
-      >
-        <table
-          style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            fontFamily: 'var(--font-sans)',
-          }}
-        >
-          <thead>
-            <tr>
-              <th style={thStyle}>Measurement</th>
-              <th style={{ ...thStyle, textAlign: 'right' }}>Your value</th>
-              <th style={{ ...thStyle, textAlign: 'right' }}>Last updated</th>
+        <thead>
+          <tr>
+            <th style={thStyle}>Measurement</th>
+            <th style={{ ...thStyle, textAlign: 'right' }}>Your value</th>
+            <th style={{ ...thStyle, textAlign: 'right' }}>Last updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          {observations.map((obs, i) => (
+            <tr key={obs.id}>
+              <td style={i === observations.length - 1 ? { ...tdStyle, borderBottom: 0 } : tdStyle}>
+                {obs.code?.coding?.[0]?.display}
+              </td>
+              <td
+                style={{
+                  ...tdStyle,
+                  borderBottom: i === observations.length - 1 ? 0 : tdStyle.borderBottom,
+                  textAlign: 'right',
+                  fontVariantNumeric: 'tabular-nums',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 13,
+                }}
+              >
+                {formatObservationValue(obs)}
+              </td>
+              <td
+                style={{
+                  ...tdStyle,
+                  borderBottom: i === observations.length - 1 ? 0 : tdStyle.borderBottom,
+                  textAlign: 'right',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 13,
+                  color: 'var(--fg-muted)',
+                }}
+              >
+                {formatDate(obs.meta?.lastUpdated)}
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {observations.map((obs, i) => (
-              <tr key={obs.id}>
-                <td style={i === observations.length - 1 ? { ...tdStyle, borderBottom: 0 } : tdStyle}>
-                  {obs.code?.coding?.[0]?.display}
-                </td>
-                <td
-                  style={{
-                    ...tdStyle,
-                    borderBottom: i === observations.length - 1 ? 0 : tdStyle.borderBottom,
-                    textAlign: 'right',
-                    fontVariantNumeric: 'tabular-nums',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: 13,
-                  }}
-                >
-                  {formatObservationValue(obs)}
-                </td>
-                <td
-                  style={{
-                    ...tdStyle,
-                    borderBottom: i === observations.length - 1 ? 0 : tdStyle.borderBottom,
-                    textAlign: 'right',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: 13,
-                    color: 'var(--fg-muted)',
-                  }}
-                >
-                  {formatDate(obs.meta?.lastUpdated)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
